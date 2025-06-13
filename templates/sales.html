@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Sales{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5 bg-light">
+    <h2>Sales Record</h2> 
+    <table class="table">
+        <tr>
+        <th>Order ID</th>
+        <th>Quantity</th>
+        <th>Date</th>
+        </tr>
+    
+        {% for sale in salesList %}
+        <tr>
+            <td> {{ sale[0] }}</td>
+            <td> {{ sale[1] }} </td>
+            <td> {{sale[2]}}</td>
+            <td> <a class="btn btn-primary " href="{{ url_for('view_sale_detail', order_id=sale[0]) }}"><b> <i class="fa fa-list"></i>  View Detail</b> </a></td>
+            </tr>
+        {% endfor %}
+       
+    </table>
+    
+</div>
+
+{% endblock %}

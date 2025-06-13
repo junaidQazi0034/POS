@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}Inventory{% endblock %}
+
+{% block content %}
+<form method="POST" action="{{ url_for('set_alert') }}">
+    <div class="container-fluid mt-5">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header text-danger">
+            <h2>Set Low Quantity Alert</h2>
+            </div>
+            <div class="card-body">
+               
+                <div class="form-group">
+                  <label for="product">Select Product</label>
+                 <select name="product" id="product" class="form-control">
+                  {% for item in productsList%}
+                  <option value="{{item[0]}}">{{item[1]}} ( {{item[2]}} ) </option>
+                  {% endfor %}
+                 </select>
+              </div>
+                <div class="form-group">
+                  <label for="qty">Alert Quantity</label>
+                  <input type="number" class="form-control" id="qty" name="qty" placeholder="Enter Alert Quantity" required>
+                </div>
+                <div class="form-group">
+                <button type="submit" class="btn btn-danger" name="alert">Set Alert</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </form>
+    <!-- displaying stock balance table-->
+<div class="container mt-5 bg-light">
+    <h2>Stock Balance</h2> 
+    <table class="table">
+        <tr style="background:#ccc;">
+        <th>Item</th>
+        <th>Size/Unit</th>
+        <th>Category</th>
+        <th>Stock Quantity</th>
+        </tr>
+    
+        {% for item in stockList %}
+        <!--set highlight background for rows having item[5]<1 -->
+            {%if item[5]<1 %}<tr class="glow-red"> {% else %}  <tr > {%endif%}
+       
+           <td> {{ item[1] }}</td>
+            <td> {{ item[2] }}</td>
+            <td> {{ item[3] }}</td>
+            <td> {{ item[4] }}</td>
+           <!-- <td> {{ item[5] }}</td>  -->
+            </tr>
+        {% endfor %}
+       
+    </table>
+</div>
+
+
+
+ {% endblock %}

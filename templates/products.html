@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Products List{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5 bg-light">
+    <h2>Products List</h2>
+    <a class="btn btn-primary" href="{{ url_for('add_product') }}"><i class="fa fa-plus-circle"></i>  Add New Product</a>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Size</th>
+            <th>Category</th>
+            <th>Unit Price</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for product in products %}
+            <tr>
+                <td>{{ product[0] }}</td>
+                <td>{{ product[1] }}</td>
+                <td>{{ product[2] }}</td>
+                <td>{{ product[3] }}</td>
+                <td>{{ product[4] }}</td>
+                <td>
+                    <a class="btn btn-primary" href="{{ url_for('update_product', pid=product[0])}}" ><i class="fa fa-pencil"></i> Edit</a>
+                    <a class="btn btn-danger"  href="{{ url_for('delete_product', pid=product[0])}}" onclick="return confirm('Are your sure to delete?')"><i class="fa fa-trash"></i>  Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

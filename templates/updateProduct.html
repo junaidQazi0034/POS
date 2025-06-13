@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Update Product Data{% endblock %}
+
+{% block content %}
+<form method="POST" action="{{ url_for('update_product', pid=product[0]) }}">
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+        <h2>  Update Product Data</h2>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Enter Product Name" value="{{product[1]}}" required>
+          </div>
+            <div class="form-group">
+              <label for="username">Size/Unit</label>
+              <input type="text" class="form-control" id="size" name="size" placeholder="Enter Size or Unit" value="{{product[2]}}" required>
+            </div>
+        
+            <div class="form-group">
+              <label for="age">Unit Price</label>
+              <input type="number" class="form-control" id="unitPrice" name="unitPrice" placeholder="Enter Unit Price" value="{{product[4]}}" required>
+            </div>
+            <div class="form-group">
+              <label for="gender">Category</label>
+              <div class="custom-control custom-select">
+                <select name="category" id="category">
+                  <option {%if(product[3]=="Grains")%} selected {% endif %}>Grains</option>
+                  <option {%if(product[3]=="Fruits")%} selected {% endif %}>Fruits</option>
+                  <option {%if(product[3]=="Vegetables")%} selected {% endif %}>Vegetables</option>
+                  <option {%if(product[3]=="Drinks")%} selected {% endif %}>Drinks</option>
+                  <option {%if(product[3]=="Cosmetics")%} selected {% endif %}>Cosmetics</option>
+                  <option {%if(product[3]=="Grocery")%} selected {% endif %}>Grocery</option>
+                  <option {%if(product[3]=="Others")%} selected {% endif %}>Others</option>
+                 </select>
+              </div>
+          </div>
+          
+            <button type="submit" class="btn btn-success" >Update Data</button>
+         
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</form>
+
+{% endblock %}

@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% block title %}Cart{% endblock %}
+{% block content %}
+
+<div class="container mt-5 bg-light p-4">
+    <h2>Order Detail</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Unit Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+                <th>
+                    <a class="btn btn-primary" href="{{ url_for('view_sales') }}">
+                        <i class="fa fa-arrow-left"></i> Back
+                    </a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% set ns = namespace(grandTotal=0) %}
+            {% for item in items %}
+            {% set subtotal = item[2] * item[3] %}
+            <tr>
+                <td>{{ item[1] }}</td>
+                <td>{{ item[2] }} PKR</td>
+                <td>{{ item[3] }}</td>
+                <td>{{ subtotal }} PKR</td>
+                {% set ns.grandTotal = ns.grandTotal + subtotal %}
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4">
+                    <h3>Grand Total: {{ ns.grandTotal }} PKR</h3>
+                </td>
+                <td>
+                    <a class="btn btn-success text-light" onclick="printDiv('print-receipt')">
+                        <i class="fa fa-print"></i> Print
+                    </a>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<!-- Receipt Section for Printing -->
+<div id="print-receipt" class="print-only">
+    <div style="text-align:center;">
+        <h4>POS Receipt</h4>
+        <p>Date: {{ date }}</p>
+    </div>
+    <hr>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Unit Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% set ns = namespace(grandTotal=0) %}
+            {% for item in items %}
+            {% set subtotal = item[2] * item[3] %}
+            <tr>
+                <td>{{ item[1] }}</td>
+                <td>{{ item[2] }} PKR</td>
+                <td>{{ item[3] }}</td>
+                <td>{{ subtotal }} PKR</td>
+                {% set ns.grandTotal = ns.grandTotal + subtotal %}
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4" style="text-align:right;">
+                    <strong>Grand Total: {{ ns.grandTotal }} PKR</strong>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<!-- JavaScript for Printing -->
+<script>
+    function printDiv(divId) {
+        var content = document.getElementById(divId).innerHTML;
+        var mywindow = window.open('', 'Print', 'height=600,width=800');
+
+        // Write the content to the new window
+        mywindow.document.write('<html><head><title>Print</title>');
+        mywindow.document.write('</head><body>');
+        mywindow.document.write(content);
+        mywindow.document.write('</body></html>');
+
+        // Ensure the content is loaded before triggering print
+        mywindow.document.close();
+        mywindow.focus();
+
+        // Use setTimeout to delay closing the window after printing
+        mywindow.print();
+        setTimeout(function () {
+            mywindow.close();
+        }, 500); // Delay of 500ms to ensure the print dialog is processed
+    }
+
+</script>
+
+<!-- CSS for Print -->
+<style>
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+
+        #print-receipt,
+        #print-receipt * {
+            visibility: visible;
+        }
+
+        #print-receipt {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+        }
+    }
+</style>
+
+{% endblock %}

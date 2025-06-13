@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}Add New User{% endblock %}
+
+{% block content %}
+<form method="POST" action="{{ url_for('add_user') }}">
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+        <h2>  Add New User</h2>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your Name" required>
+          </div>
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input type="text" class="form-control" id="username" name="username" placeholder="Enter your Username" required>
+            </div>
+        
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="text" class="form-control" id="password" name="password" placeholder="Enter your Password" required>
+            </div>
+            <div class="form-group">
+              <label for="age">Age</label>
+              <input type="number" class="form-control" id="age" name="age" placeholder="Enter your age" required>
+            </div>
+            <div class="form-check form-check-inline">
+              <label for="gender">Gender: &nbsp;&nbsp;&nbsp;</label>
+              <div class="custom-control custom-radio">
+                  <input type="radio" id="male" name="gender" class="form-check-input" value="Male" checked>
+                  <label class="form-check-label" for="male">Male</label>
+            </div>
+              <div class="custom-control custom-radio"> 
+                  <input type="radio" id="female" name="gender" class="form-check-input" value="Female">
+                  <label class="form-check-label" for="female">Female</label>
+              </div>
+          </div>
+          <div class="form-check form-check-inline">
+            <label for="gender">User Type:</label>
+            <div class="custom-control custom-radio">
+                <input type="radio" id="manager" name="userType" class="form-check-input" value="Manager" checked>
+                <label class="form-check-label" for="manager">Manager</label>
+          </div>
+            <div class="custom-control custom-radio"> 
+                <input type="radio" id="cashier" name="userType" class="form-check-input" value="Cashier">
+                <label class="form-check-label" for="cashier">Cashier</label>
+            </div>
+        </div>
+       
+        </div>
+        <div class="card-footer">
+          <button type="submit" class="btn btn-primary" name="register">Add User</button>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+</form>
+<script>
+  var msg = "{{ message }}";
+  if(msg != 'None')
+  {
+alert(msg);
+  }
+
+</script>
+{% endblock %}

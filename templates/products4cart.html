@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Products List{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5 bg-light">
+    <h2>Products List</h2>
+   
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Size</th>
+            <th>Category</th>
+            <th>Unit Price</th>
+            <th>Quantity</th>
+             <th><a class="btn btn-primary" href="{{ url_for('view_cart', order_id=itemCount[1]) }}"><i class="fa fa-shopping-cart"></i> View Cart <span class="badge badge-light">{{itemCount[0]}}</span></a></th>
+        </tr>
+        </thead>
+        <tbody>
+        
+        {% for product in products %}
+        <form action="/add2cart" method="post">
+            <tr>
+                <td>{{ product[0] }}</td>
+                <td>{{ product[1] }}</td>
+                <td>{{ product[2] }}</td>
+                <td>{{ product[3] }}</td>
+                <td>{{ product[4] }}</td>
+                <td>
+                    
+                    <input type="number" id="qty" name="qty" value="1" min="1"  class="form-control"/>
+                    <input type="hidden" id="product_id" name="product_id" value="{{product[0]}}" />
+                    <input type="hidden" id="order_id" name="order_id" value="{{itemCount[1]}}" />
+                    
+                </td>
+               <td><input type="submit" class="btn btn-success"  value="Add to Cart"/></td>
+            </tr>
+        </form>
+        {% endfor %}
+  
+        </tbody>
+    </table>
+
+</div>
+
+{% endblock %}

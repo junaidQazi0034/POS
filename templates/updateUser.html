@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}Update User Data{% endblock %}
+
+{% block content %}
+<form method="POST" action="{{ url_for('update_user', uid=user[0]) }}">
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+        <h2>  Update User Data</h2>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your Name" value="{{user[1]}}" required>
+          </div>
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input type="text" class="form-control" id="username" name="username" placeholder="Enter your Username" value="{{user[2]}}" required>
+            </div>
+        
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="text" class="form-control" id="password" name="password" placeholder="Enter your Password" value="{{user[3]}}" required>
+            </div>
+            <div class="form-group">
+              <label for="age">Age</label>
+              <input type="number" class="form-control" id="age" name="age" placeholder="Enter your age" value="{{user[5]}}" required>
+            </div>
+            <div class="form-check form-check-inline">
+              <label for="gender">Gender:&nbsp;&nbsp;&nbsp;</label>
+              <div class="custom-control custom-radio">
+                  <input type="radio" id="male" name="gender" class="form-check-input" value="Male" {%if(user[4]=="Male")%} checked {% endif %}>
+                  <label class="form-check-label" for="male">Male</label>
+            </div>
+              <div class="custom-control custom-radio"> 
+                  <input type="radio" id="female" name="gender" class="form-check-input" value="Female"  {%if(user[4]=="Female")%} checked {% endif %}>
+                  <label class="form-check-label" for="female">Female</label>
+              </div>
+          </div>
+          <div class="form-check form-check-inline">
+            <label for="gender">User Type:</label>
+            <div class="custom-control custom-radio">
+                <input type="radio" id="manager" name="userType" class="form-check-input" value="Manager"  {%if(user[6]=="Manager")%} checked {% endif %}>
+                <label class="form-check-label" for="manager">Manager</label>
+          </div>
+            <div class="custom-control custom-radio"> 
+                <input type="radio" id="cashier" name="userType" class="form-check-input" value="Cashier"  {%if(user[6]=="Cashier")%} checked {% endif %}>
+                <label class="form-check-label" for="cashier">Cashier</label>
+            </div>
+        </div>
+        <div class="form-control">
+            <button type="submit" class="btn btn-success" >Update Data</button>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</form>
+
+{% endblock %}

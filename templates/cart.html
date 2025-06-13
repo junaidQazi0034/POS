@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block title %}Cart{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5 bg-light">
+    <h2>Items in Cart</h2> 
+    <table class="table">
+        <tr>
+        <th>Name</th>
+        <th>Unit Price</th>
+        <th>Quantity</th>
+        <th>Total</th>
+        <th>  <a class="btn btn-primary" href="{{ url_for('products_for_cart') }}"> <i class="fa fa-arrow-left"></i> Back</a></th>
+        </tr>
+    
+        {%  set ns = namespace( grandTotal=0) %}
+        {% for item in items %}
+       
+         {%set subtotal=item[2]* item[3] %} 
+        <tr>
+            <td>{{ item[1] }}</td>
+            <td> {{ item[2] }} PKR</td>
+            <td> {{item[3]}}</td>
+            <td> {{subtotal}}
+            <td> <a class="text-danger" href="{{ url_for('remove_from_cart', cart_id=item[0]) }}"> <i class="fa fa-trash-alt fa-2x"></i></a></td>
+        {% set ns.grandTotal = ns.grandTotal + subtotal %}
+            </tr>
+        {% endfor %}
+        <tr><td colspan="4"><h3>Grand Total:  {{ns.grandTotal}} PKR</h3></td>
+            <td>
+                {% if ns.grandTotal>0 %}
+            <a class="btn btn-success" onclick="printDiv('print-receipt')"  href="{{ url_for('complete_cart', order_id=orderID) }}"><i class="fa fa-print"></i> Checkout & Print</a></td></tr>
+             {% endif %}
+            <tr><td></td></tr>
+    </table>
+    
+</div>
+<div id="print-receipt" class="print-only" >
+    <div style="text-align:center;"><h4>POS Receipt</h4>  Date:{{ date }}</div>
+    <hr>
+    <table>
+        <tr>
+        <th>Name</th>
+        <th>Unit Price</th>
+        <th>Quantity</th>
+        <th>Total</th>
+        </tr>
+        {%  set ns = namespace( grandTotal=0) %}
+        {% for item in items %}
+       
+         {%set subtotal=item[2]* item[3] %} 
+        <tr>
+            <td>{{ item[1] }}</td>
+            <td> {{ item[2] }}</td>
+            <td> {{item[3]}}</td>
+            <td> {{subtotal}}
+        {% set ns.grandTotal = ns.grandTotal + subtotal %}
+            </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="5" style="text-algin:right;">
+                <hr>
+                <strong>Grand Total:  {{ns.grandTotal}} PKR</strong>
+            </td></tr>
+    </table>
+</div>
+
+<script>
+    function printDiv(divId) {
+        var content = document.getElementById(divId).innerHTML;
+        var mywindow = window.open('', 'Print', 'height=600,width=800');
+
+        mywindow.document.write('<html><head><title>Print</title>');
+        mywindow.document.write('</head><body>');
+        mywindow.document.write(content);
+        mywindow.document.write('</body></html>');
+
+        mywindow.document.close();
+        mywindow.focus();
+        mywindow.print();
+        mywindow.close();
+
+        return true;
+    }
+</script>
+{% endblock %}

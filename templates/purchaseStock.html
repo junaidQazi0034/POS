@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}Purchase Stock{% endblock %}
+
+{% block content %}
+<form method="POST" action="{{ url_for('purchase_stock') }}">
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+        <h2>  Purchase/Add Stock</h2>
+        </div>
+        <div class="card-body">
+           
+            <div class="form-group">
+              <label for="product">Select Product</label>
+             <select name="product" id="product" class="form-control">
+              {% for item in items%}
+              <option value="{{item[0]}}"> {{item[1]}}  ({{item[2]}})</option>
+              {% endfor %}
+             </select>
+            </div>
+            <div class="form-group">
+              <label for="qty">Quantity</label>
+              <input type="number" class="form-control" id="qty" name="qty" placeholder="Enter Quantity" required>
+            </div>
+            <div class="form-group">
+             
+            <button type="submit" class="btn btn-primary" name="add">Add to Stock</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</form>
+<!--Displaying the Stock Quantity Table-->
+<div class="container mt-5 bg-light">
+  <h2>Items in Stock</h2> 
+  <table class="table">
+      <tr>
+      <th>Item</th>
+      <th>Size/Unit</th>
+      <th>Category</th>
+      <th>Quantity</th>
+      </tr>
+  
+      {% for item in stockItems %}
+      <tr>
+          <td> {{ item[0] }}</td>
+          <td> {{ item[1] }} </td>
+          <td> {{item[2]}}</td>
+          <td> {{item[3]}}</td>
+          </tr>
+      {% endfor %}
+     
+  </table>
+</div>
+
+{% endblock %}

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}POS{% endblock %}</title>
+    <!-- Bootstrap CSS -->
+    <link href="{{ url_for('static', filename = 'css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename = 'css/highlight.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <style>
+        /* CSS styles for the div */
+        .print-only {
+            display: none; /* Initially hide the div */
+        }
+
+        @media print {
+            /* Show the div only when printing */
+            .print-only {
+                display: block;
+            }
+        }
+        body{
+             background-image: url('static/bg.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+  
+    }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-info">
+    <a class="navbar-brand" href="#">Point of Sale (POS)</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        {% if session.get('usertype')=="Admin": %}
+        <ul class="navbar-nav" >
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('view_users') }}">Users</a></li> 
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('view_products') }}">Products</a></li> 
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('view_sales') }}">Sales</a></li> 
+           
+        </ul>
+        {% elif session.get('usertype')=="Manager": %}
+        <ul class="navbar-nav" >
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('view_home') }}">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('view_inventory') }}">Inventory</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('purchase_stock') }}">Add Stock</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('view_sales') }}">Sales</a></li> 
+        </ul>
+        {% elif session.get('usertype')=="Cashier": %}
+        <ul class="navbar-nav" >
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('view_home') }}">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('products_for_cart') }}">Products</a></li>           
+        </ul>
+        {% else: %}
+        <ul class="navbar-nav" >
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('user_login') }}">User Login</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('admin_login') }}">Admin Login</a></li>
+           <!-- <li class="nav-item"><a class="nav-link" href="{{ url_for('register_user') }}">Register</a></li> -->
+        </ul>
+        {% endif %}
+
+      {% if session.get('usertype'): %}
+    <span class="nav-link ml-auto " style="color:white;">  Logged in as: {{session.get('usertype')}}</span> 
+    <span> <a  class="nav-link btn btn-danger ml-auto  " href="{{ url_for('logout') }}">Logout <i class="fa fa-sign-out"></i></a></span>
+       {%  endif %}
+    </div>
+</nav>
+
+<div class="container mt-3">
+    {% block content %}{% endblock %}
+</div>
+
+<!-- Bootstrap JS and Popper.js -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+</body>
+</html>

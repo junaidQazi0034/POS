@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Users List{% endblock %}
+
+{% block content %}
+
+<form action="{{ url_for('user_login') }}" method="POST">
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+         <h2> User Login</h2>
+        </div>
+        <div class="card-body">
+        
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username " required>
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            <div class="form-check form-check-inline">
+              <label for="gender">User Type:</label>
+              <div class="custom-control custom-radio">
+                  <input type="radio" id="manager" name="userType" class="form-check--input" value="Manager" checked>
+                  <label class="form-check-label" for="manager">Manager</label>
+            </div>
+              <div class="custom-control custom-radio"> 
+                  <input type="radio" id="cashier" name="userType" class="form-check--input" value="Cashier">
+                  <label class="form-check-label" for="cashier">Cashier</label>
+              </div>
+          </div>
+                 
+       
+        </div>
+        <div class="card-footer">
+          <!--  <p class="text-muted">Don't have an account? <a href="{{ url_for('register_user') }}">Register here</a></p>  -->
+          <button type="submit" class="btn btn-primary">Login</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</form>
+<script>
+  var msg = "{{ message }}";
+  if(msg!='None'){
+    alert(msg);
+  }
+</script>
+{% endblock %}
